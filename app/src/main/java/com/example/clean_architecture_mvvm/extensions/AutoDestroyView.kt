@@ -1,4 +1,4 @@
-package com.example.clean_architecture_mvvm
+package com.example.clean_architecture_mvvm.extensions
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
