@@ -1,15 +1,15 @@
 package com.example.domain
 
 import com.example.domain.contracts.LoginContract
+import com.example.domain.models.User
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class LoginUseCase @Inject constructor(private val loginContract: LoginContract) {
+class LoginUseCase @Inject constructor(
+    private val loginContract: LoginContract
+) {
 
-    init {
-        println("markrott Init LoginUseCase")
-    }
-
-    fun executeLogin(email: String, password: String) {
-        loginContract.executeLogin(email, password)
+    fun executeLoginRequest(): Flow<User> {
+        return loginContract.executeLoginRequest()
     }
 }
