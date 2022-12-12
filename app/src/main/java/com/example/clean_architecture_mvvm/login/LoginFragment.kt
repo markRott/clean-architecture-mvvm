@@ -13,6 +13,7 @@ import com.example.clean_architecture_mvvm.extensions.autoDestroy
 import com.example.clean_architecture_mvvm.extensions.data
 import com.example.clean_architecture_mvvm.extensions.observe
 import com.example.clean_architecture_mvvm.instant.UpdateButtonState
+import com.example.clean_architecture_mvvm.users.UsersVM
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,6 +22,7 @@ class LoginFragment : Fragment() {
     private var binding: FragmentLoginBinding by autoDestroy()
 
     private val loginVM by activityViewModels<LoginVM>()
+    private val usersVM by activityViewModels<UsersVM>()
     private val updateButtonState by activityViewModels<UpdateButtonState>()
 
     override fun onCreateView(
@@ -59,7 +61,9 @@ class LoginFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             val email = binding.edtEmail.data()
             val psw = binding.edtPassword.data()
-            loginVM.loginRequest(email, psw)
+
+//            loginVM.loginRequest(email, psw)
+            usersVM.fetchUsers()
         }
     }
 

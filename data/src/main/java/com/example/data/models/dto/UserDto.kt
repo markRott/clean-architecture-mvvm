@@ -1,6 +1,6 @@
-package com.example.data.dto
+package com.example.data.models.dto
 
-
+import com.example.data.models.db.UserDb
 import com.example.domain.models.User
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class UserDto(
     @SerialName("userId")
-    val userId: Int?,
+    val userId: Int,
     @SerialName("emailAddress")
     val emailAddress: String?,
     @SerialName("firstName")
@@ -19,6 +19,16 @@ data class UserDto(
     val phoneNumber: String?
 )
 
-fun UserDto.toToUser(): User {
+fun UserDto.toUser(): User {
     return User(userId, emailAddress, firstName, lastName, phoneNumber)
+}
+
+fun UserDto.toUserDb() : UserDb {
+    return UserDb(
+        userId,
+        emailAddress ?: "",
+        firstName ?: "",
+        lastName ?: "",
+        phoneNumber ?: ""
+    )
 }
