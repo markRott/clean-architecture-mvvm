@@ -9,7 +9,7 @@ class LoginUseCase @Inject constructor(
     private val loginContract: LoginContract
 ) {
 
-    fun executeLoginRequest(): Flow<User> {
-        return loginContract.executeLoginRequest()
+    fun executeLoginRequest(email: String, password: String): Flow<Result<User>> {
+        return loginContract.loginRequest(email, password)
     }
 }

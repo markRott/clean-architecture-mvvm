@@ -6,13 +6,11 @@ import io.ktor.client.plugins.logging.*
 object KtorLogger {
 
     fun getLogger(): Logger {
+
         return object : Logger {
+
             override fun log(message: String) {
-                Napier.i(
-                    tag = "MyApp",
-                    throwable = null,
-                    message = message
-                )
+                Napier.i(tag = "MyApp", throwable = null, message = message)
             }
         }
     }

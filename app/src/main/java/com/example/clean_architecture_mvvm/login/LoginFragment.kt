@@ -14,7 +14,6 @@ import com.example.clean_architecture_mvvm.extensions.data
 import com.example.clean_architecture_mvvm.extensions.observe
 import com.example.clean_architecture_mvvm.instant.UpdateButtonState
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -58,22 +57,28 @@ class LoginFragment : Fragment() {
 
     private fun onLoginClick() {
         binding.btnLogin.setOnClickListener {
-            loginVM.executeLogin(
-                binding.edtEmail.data(),
-                binding.edtPassword.data()
-            )
+            val email = binding.edtEmail.data()
+            val psw = binding.edtPassword.data()
+            loginVM.loginRequest(email, psw)
         }
     }
 
     private fun receiveLoginStatus() {
         viewLifecycleOwner.observe {
-            loginVM.loginFlow.collect { state ->
+            loginVM.loginFlow.collect { state: LoginUiState ->
                 when (state) {
-                    LoginUiState.Loading -> Unit
-                    LoginUiState.SuccessLogin -> Unit
-                    LoginUiState.FailLogin -> Unit
+                    is LoginUiState.Loading -> {}
+                    is LoginUiState.SuccessLogin -> {
+                        println("UI User: ${state.user}")
+                    }
+                    is LoginUiState.FailLogin -> {
+                        println("Login exception: ${state.msg}")
+                    }
+                    else -> Unit
                 }
             }
         }
     }
+
+
 }

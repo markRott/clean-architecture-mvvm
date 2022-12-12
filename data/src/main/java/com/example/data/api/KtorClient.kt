@@ -1,5 +1,6 @@
 package com.example.data.api
 
+import com.example.data.exception.ExceptionManager
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import io.ktor.client.*
@@ -8,28 +9,35 @@ import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.logging.*
 import io.ktor.serialization.kotlinx.json.*
-import kotlin.concurrent.thread
 
-private const val BASE_URL = "https://httpbin.org"
-private const val GET_UUID = "$BASE_URL/uuid"
+private const val BASE_URL = "https://run.mocky.io/v3/"
 
 class KtorClient {
 
     val client: HttpClient = HttpClient(Android) {
-
-        install(DefaultRequest) {
-            url("https://run.mocky.io/v3/")
-//            headers.append("Authorization", "Bearer abc123")
-        }
-
+        expectSuccess = true
+        setupDefaultProperty()
         install(HttpTimeout)
         install(ContentNegotiation) { json() }
         install(Logging) { initLogger() }
+        prepareHttpResponseValidator()
+    }
+
+    private fun HttpClientConfig<AndroidEngineConfig>.setupDefaultProperty() {
+        install(DefaultRequest) { url(BASE_URL) }
     }
 
     private fun Logging.Config.initLogger() {
         level = LogLevel.BODY
         logger = KtorLogger.getLogger()
             .also { Napier.base(DebugAntilog()) }
+    }
+
+    private fun HttpClientConfig<AndroidEngineConfig>.prepareHttpResponseValidator() {
+        HttpResponseValidator {
+            handleResponseExceptionWithRequest { exception, _ ->
+                ExceptionManager.getException(exception)
+            }
+        }
     }
 }

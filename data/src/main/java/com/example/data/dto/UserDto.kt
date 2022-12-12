@@ -19,6 +19,6 @@ data class UserDto(
     val phoneNumber: String?
 )
 
-fun UserDto.userDtoToUser(): User {
+fun UserDto.toToUser(): User {
     return User(userId, emailAddress, firstName, lastName, phoneNumber)
 }
