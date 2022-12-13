@@ -13,7 +13,9 @@ import com.example.clean_architecture_mvvm.extensions.autoDestroy
 import com.example.clean_architecture_mvvm.extensions.data
 import com.example.clean_architecture_mvvm.extensions.observe
 import com.example.clean_architecture_mvvm.instant.UpdateButtonState
-import com.example.clean_architecture_mvvm.users.UsersVM
+import com.example.clean_architecture_mvvm.ui_state.Status
+import com.example.clean_architecture_mvvm.ui_state.UiResult
+import com.example.domain.models.User
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,7 +24,6 @@ class LoginFragment : Fragment() {
     private var binding: FragmentLoginBinding by autoDestroy()
 
     private val loginVM by activityViewModels<LoginVM>()
-    private val usersVM by activityViewModels<UsersVM>()
     private val updateButtonState by activityViewModels<UpdateButtonState>()
 
     override fun onCreateView(
@@ -61,28 +62,20 @@ class LoginFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             val email = binding.edtEmail.data()
             val psw = binding.edtPassword.data()
-
-//            loginVM.loginRequest(email, psw)
-            usersVM.fetchUsers()
+            loginVM.loginRequest(email, psw)
         }
     }
 
     private fun receiveLoginStatus() {
         viewLifecycleOwner.observe {
-            loginVM.loginFlow.collect { state: LoginUiState ->
-                when (state) {
-                    is LoginUiState.Loading -> {}
-                    is LoginUiState.SuccessLogin -> {
-                        println("UI User: ${state.user}")
-                    }
-                    is LoginUiState.FailLogin -> {
-                        println("Login exception: ${state.msg}")
-                    }
+            loginVM.loginFlow.collect { state: UiResult<User> ->
+                when (state.status) {
+                    Status.LOADING -> Unit
+                    Status.SUCCESS -> { println("UI User: ${state.data}") }
+                    Status.ERROR -> { println("Login exception: ${state.errorMsg}") }
                     else -> Unit
                 }
             }
         }
     }
-
-
 }
