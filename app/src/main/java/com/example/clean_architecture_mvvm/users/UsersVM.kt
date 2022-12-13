@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.clean_architecture_mvvm.ui_state.UiResult
 import com.example.clean_architecture_mvvm.ui_state.UiResult.Companion.success
 import com.example.clean_architecture_mvvm.ui_state.UiResult.Companion.error
-import com.example.domain.GetUsersUseCase
+import com.example.domain.FetchUsersUseCase
 import com.example.domain.models.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -15,7 +15,7 @@ typealias UsersFlow = UiResult<List<User>>
 
 @HiltViewModel
 class UsersVM @Inject constructor(
-    private val usersUseCase: GetUsersUseCase
+    private val usersUseCase: FetchUsersUseCase
 ) : ViewModel() {
 
     private val _usersUiFlow = MutableStateFlow<UsersFlow>(UiResult.none())

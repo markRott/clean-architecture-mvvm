@@ -5,7 +5,9 @@ import com.example.domain.models.User
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetUsersUseCase @Inject constructor(private val usersContract: UsersContract) {
+class FetchUsersUseCase @Inject constructor(
+    private val usersContract: UsersContract
+) {
 
     fun fetchUsers(): Flow<Result<List<User>>> {
         return usersContract.fetchUsersRequest()
