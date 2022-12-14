@@ -1,6 +1,6 @@
-package com.example.domain
+package com.example.domain.usecases
 
-import com.example.domain.contracts.UsersContract
+import com.example.domain.repository.UsersContract
 import com.example.domain.models.User
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

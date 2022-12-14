@@ -2,8 +2,8 @@ package com.example.clean_architecture_mvvm.di
 
 import com.example.data.repository.LoginRepository
 import com.example.data.repository.UsersRepository
-import com.example.domain.contracts.UsersContract
-import com.example.domain.contracts.LoginContract
+import com.example.domain.repository.UsersContract
+import com.example.domain.repository.LoginContract
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

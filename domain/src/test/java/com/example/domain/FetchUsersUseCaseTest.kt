@@ -1,7 +1,8 @@
 package com.example.domain
 
-import com.example.domain.contracts.UsersContract
+import com.example.domain.repository.UsersContract
 import com.example.domain.models.User
+import com.example.domain.usecases.FetchUsersUseCase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -32,8 +33,10 @@ class FetchUsersUseCaseTest {
 
         val expectedUsers: List<User> = listOf(
             getExpectedUser(),
-            getExpectedUser(), getExpectedUser()
+            getExpectedUser(),
+            getExpectedUser()
         )
+
         val expectedUsersFlow: Flow<Result<List<User>>> = flowOf(Result.success(expectedUsers))
         coEvery { usersContract.fetchUsersRequest() } returns expectedUsersFlow
 

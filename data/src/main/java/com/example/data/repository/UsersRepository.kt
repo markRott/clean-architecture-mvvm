@@ -8,7 +8,7 @@ import com.example.data.models.dto.UserDto
 import com.example.data.models.dto.toUser
 import com.example.data.models.dto.toUserDb
 import com.example.data.thread.ThreadContract
-import com.example.domain.contracts.UsersContract
+import com.example.domain.repository.UsersContract
 import com.example.domain.models.User
 import io.ktor.client.call.*
 import io.ktor.client.request.*

@@ -1,4 +1,4 @@
-package com.example.domain.contracts
+package com.example.domain.repository
 
 import com.example.domain.models.User
 import kotlinx.coroutines.flow.Flow

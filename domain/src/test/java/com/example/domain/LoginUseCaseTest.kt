@@ -1,7 +1,8 @@
 package com.example.domain
 
-import com.example.domain.contracts.LoginContract
+import com.example.domain.repository.LoginContract
 import com.example.domain.models.User
+import com.example.domain.usecases.LoginUseCase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
