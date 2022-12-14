@@ -2,13 +2,12 @@ package com.example.data.repository
 
 import com.example.data.api.KtorClient
 import com.example.data.database.DbInitializer
+import com.example.data.mappers.toUser
+import com.example.data.mappers.toUserDb
 import com.example.data.models.db.UserDb
-import com.example.data.models.db.toUser
 import com.example.data.models.dto.UserDto
-import com.example.data.models.dto.toUser
-import com.example.data.models.dto.toUserDb
 import com.example.data.thread.ThreadContract
-import com.example.domain.repository.UsersContract
+import com.example.domain.repository.UsersRepoContract
 import com.example.domain.models.User
 import io.ktor.client.call.*
 import io.ktor.client.request.*
@@ -21,7 +20,7 @@ class UsersRepository @Inject constructor(
     ktorClient: KtorClient,
     dbInitializer: DbInitializer,
     private val thread: ThreadContract
-) : UsersContract {
+) : UsersRepoContract {
 
     private val httpClient = ktorClient.client
     private val userDao = dbInitializer.database.userDao()
@@ -48,7 +47,6 @@ class UsersRepository @Inject constructor(
         val usersDto: List<UserDto> = httpClient.get(url).body()
         val users = usersDto.map { it.toUser() }
         saveUsers(usersDto)
-
         emit(Result.success(users))
     }
 

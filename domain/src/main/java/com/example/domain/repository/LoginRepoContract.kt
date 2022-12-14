@@ -3,7 +3,7 @@ package com.example.domain.repository
 import com.example.domain.models.User
 import kotlinx.coroutines.flow.Flow
 
-interface UsersContract {
+interface LoginRepoContract {
 
-    fun fetchUsersRequest(): Flow<Result<List<User>>>
+    fun loginRequest(email: String, password: String): Flow<Result<User>>
 }

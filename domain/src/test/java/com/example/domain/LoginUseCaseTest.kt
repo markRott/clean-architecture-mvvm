@@ -1,6 +1,6 @@
 package com.example.domain
 
-import com.example.domain.repository.LoginContract
+import com.example.domain.repository.LoginRepoContract
 import com.example.domain.models.User
 import com.example.domain.usecases.LoginUseCase
 import io.mockk.MockKAnnotations
@@ -20,19 +20,19 @@ import strikt.assertions.isEqualTo
 class LoginUseCaseTest {
 
     private lateinit var loginUseCase: LoginUseCase
-    @MockK private lateinit var loginContract: LoginContract
+    @MockK private lateinit var loginRepoContract: LoginRepoContract
 
     @Before
     fun setUp() {
         MockKAnnotations.init(this)
-        loginUseCase = LoginUseCase(loginContract)
+        loginUseCase = LoginUseCase(loginRepoContract)
     }
 
     @Test
     fun `execute success login request`() = runTest {
         val expectedUser = getExpectedUser()
         val expectedResult: Flow<Result<User>> = flowOf(Result.success(expectedUser))
-        coEvery { loginContract.loginRequest("", "") } returns expectedResult
+        coEvery { loginRepoContract.loginRequest("", "") } returns expectedResult
 
         val actualResult = loginUseCase.executeLoginRequest("", "")
         expectThat(actualResult).isEqualTo(expectedResult)
